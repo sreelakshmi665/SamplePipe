@@ -1,51 +1,51 @@
 pipeline{
-    agent any
-   
-    tools { 
-        maven 'Maven'
-      
+    agent{
+        docker{
+            image 'maven:3-alpine'
+            args '-v/root/.m2:/root/.m2'
+        }
     }
         stages{
             stage('Git-Checkout')
             {
               steps{
-                     git 'https://github.com/sreelakshmi665/MavenSample.git'
+                     git 'https://github.com/sreelakshmi665/SamplePipe.git'
                 }
             }
              stage('Validate')
         {
             steps{
-                bat 'mvn -f MavenSample/pom.xml validate'
+              sh 'mvn -f SamplePipe/pom.xml validate'
             }
         }
         stage('Compile')
         {
             steps{
-                bat 'mvn -f MavenSample/pom.xml compile'
+               sh 'mvn -f SamplePipe/pom.xml compile'
             }
         }
         stage('Test')
         {
             steps{
-                bat 'mvn -f MavenSample/pom.xml test'
+                sh 'mvn -f SamplePipe/pom.xml test'
             }
         }
         stage('Package')
         {
             steps{
-                bat 'mvn -f MavenSample/pom.xml package'
+               sh 'mvn -f SamplePipe/pom.xml package'
             }
         }
         stage('Verify')
         {
             steps{
-                bat 'mvn -f MavenSample/pom.xml verify'
+               sh 'mvn -f SamplePipe/pom.xml verify'
             }
         }
         stage('Install')
         {
             steps{
-                bat 'mvn -f MavenSample/pom.xml install'
+                sh 'mvn -f SamplePipe/pom.xml install'
             }
         }
             
