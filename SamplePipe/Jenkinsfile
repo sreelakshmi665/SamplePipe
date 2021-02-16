@@ -1,0 +1,55 @@
+pipeline{
+    agent any
+   
+    tools { 
+        maven 'Maven'
+      
+    }
+        stages{
+            stage('Git-Checkout')
+            {
+              steps{
+                     git 'https://github.com/sreelakshmi665/MavenSample.git'
+                }
+            }
+             stage('Validate')
+        {
+            steps{
+                bat 'mvn -f MavenSample/pom.xml validate'
+            }
+        }
+        stage('Compile')
+        {
+            steps{
+                bat 'mvn -f MavenSample/pom.xml compile'
+            }
+        }
+        stage('Test')
+        {
+            steps{
+                bat 'mvn -f MavenSample/pom.xml test'
+            }
+        }
+        stage('Package')
+        {
+            steps{
+                bat 'mvn -f MavenSample/pom.xml package'
+            }
+        }
+        stage('Verify')
+        {
+            steps{
+                bat 'mvn -f MavenSample/pom.xml verify'
+            }
+        }
+        stage('Install')
+        {
+            steps{
+                bat 'mvn -f MavenSample/pom.xml install'
+            }
+        }
+            
+            
+           
+        }
+}
